@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASG Player Performance Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">ASG</div>
+        <div>
+          <h1>ASG Tracker</h1>
+          <p>Player performance system</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <button class="nav-item active" data-view="dashboard" type="button">Dashboard</button>
+        <button class="nav-item" data-view="players" type="button">Players</button>
+        <button class="nav-item" data-view="profile" type="button">Profile</button>
+      </nav>
+
+      <div class="storage-card">
+        <p>Season data</p>
+        <div class="storage-actions">
+          <button id="exportData" class="light-button" type="button">Export</button>
+          <label class="light-button">
+            Import
+            <input id="importData" type="file" accept="application/json" />
+          </label>
+        </div>
+      </div>
+    </aside>
+
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">ASG Player Performance Tracker</p>
+          <h2 id="viewTitle">Dashboard</h2>
+        </div>
+        <div class="topbar-actions">
+          <div class="search-box">
+            <input id="searchInput" type="search" placeholder="Search player, club, position, agent" autocomplete="off" />
+            <div id="searchResults" class="search-results hidden"></div>
+          </div>
+          <button id="openPlayerModal" class="primary-button" type="button">Add Player</button>
+        </div>
+      </header>
+
+      <section id="dashboardView" class="view active">
+        <div class="kpi-grid">
+          <article class="kpi-card">
+            <span>Total Players</span>
+            <strong id="totalPlayers">0</strong>
+          </article>
+          <article class="kpi-card">
+            <span>Weeks Logged</span>
+            <strong id="totalWeeks">0</strong>
+          </article>
+          <article class="kpi-card">
+            <span>Total Minutes</span>
+            <strong id="totalMinutes">0</strong>
+          </article>
+          <article class="kpi-card alert">
+            <span>Interventions</span>
+            <strong id="totalInterventions">0</strong>
+          </article>
+        </div>
+
+        <div class="dashboard-grid">
+          <section class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>Top 3 Players</h3>
+                <p>Ranked by minutes, games, goal contribution, fitness, and availability</p>
+              </div>
+            </div>
+            <div id="topPlayers" class="top-player-list"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>Club Minutes</h3>
+                <p>Tracked workload by club</p>
+              </div>
+            </div>
+            <div id="clubMinutesList" class="club-minutes-list"></div>
+          </section>
+        </div>
+
+        <section class="panel comparison-panel">
+          <div class="panel-head">
+            <div>
+              <h3>Player Comparison</h3>
+              <p>Compare two player profiles across the main ASG tracking metrics</p>
+            </div>
+            <div class="compare-controls">
+              <select id="comparePlayerA" aria-label="First comparison player"></select>
+              <select id="comparePlayerB" aria-label="Second comparison player"></select>
+            </div>
+          </div>
+          <div id="comparisonDetail" class="comparison-detail"></div>
+        </section>
+      </section>
+
+      <section id="playersView" class="view">
+        <div id="playerGrid" class="player-grid"></div>
+      </section>
+
+      <section id="profileView" class="view">
+        <div id="emptyProfile" class="empty-state">
+          <h3>Select a player profile</h3>
+          <p>Open a player from the Players screen to log weekly performance data.</p>
+        </div>
+
+        <div id="profileContent" class="profile-layout hidden">
+          <section class="profile-card">
+            <div id="profilePhoto" class="profile-photo"></div>
+            <div>
+              <h3 id="profileName"></h3>
+              <p id="profileMeta"></p>
+              <div class="agent-line">
+                <span id="profileAgent"></span>
+                <span id="profileContact"></span>
+              </div>
+            </div>
+          </section>
+
+          <section class="metric-strip">
+            <article>
+              <span>Total weeks</span>
+              <strong id="playerWeeks">0</strong>
+            </article>
+            <article>
+              <span>Total minutes</span>
+              <strong id="playerMinutes">0</strong>
+            </article>
+            <article>
+              <span>Total injuries</span>
+              <strong id="playerInjuries">0</strong>
+            </article>
+            <article class="alert">
+              <span>Last three games</span>
+              <strong id="playerIntervention">Clear</strong>
+            </article>
+          </section>
+
+          <section class="panel entry-panel">
+            <div class="panel-head">
+              <div>
+                <h3>Log Weekly Performance</h3>
+                <p>Injury entries automatically set minutes, goals, assists, status, and match performance.</p>
+              </div>
+            </div>
+            <form id="entryForm" class="entry-form">
+              <label>Week Number<input id="weekNumber" type="number" min="1" required /></label>
+              <label>Date<input id="entryDate" type="date" required /></label>
+              <label>Injury
+                <select id="injurySelect">
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </label>
+              <label>Minutes Played<input id="minutesPlayed" type="number" min="0" max="130" value="0" /></label>
+              <label>Goals<input id="goalsScored" type="number" min="0" value="0" /></label>
+              <label>Assists<input id="assistsMade" type="number" min="0" value="0" /></label>
+              <label>Fitness<input id="fitnessScore" type="number" min="1" max="10" value="7" /></label>
+              <label>Last Check-In<input id="lastCheckIn" type="date" /></label>
+              <label class="wide">Notes/Comments<textarea id="entryNotes" rows="3" placeholder="Performance notes, injury details, next action"></textarea></label>
+              <div class="computed wide">
+                <span>Status: <strong id="computedStatus">Bad</strong></span>
+                <span>Match Performance: <strong id="computedMatch">Available</strong></span>
+                <span>Intervention: <strong id="computedIntervention">No</strong></span>
+              </div>
+              <div class="entry-actions wide">
+                <button id="saveEntryButton" class="primary-button" type="submit">Save Weekly Entry</button>
+                <button id="cancelEditButton" class="ghost-button hidden" type="button">Cancel Edit</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>Performance Log</h3>
+                <p>Weekly rows for the selected player</p>
+              </div>
+            </div>
+            <div id="profileTable" class="table-wrap"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="playerModal" class="modal">
+      <form id="playerForm" method="dialog">
+        <div class="modal-head">
+          <h3>Add Player</h3>
+          <button class="ghost-button" type="button" data-close="playerModal">Close</button>
+        </div>
+        <div class="form-grid">
+          <label>Player Name<input id="playerName" required placeholder="Player name" /></label>
+          <label>Player's Club<input id="playerClub" required placeholder="Club" /></label>
+          <label>Position<input id="playerPosition" required placeholder="Position" /></label>
+          <label>Agent's Name<input id="agentName" placeholder="Agent or agency" /></label>
+          <label>Agent's Contact<input id="agentContact" placeholder="Phone, email, or note" /></label>
+          <label>Player Picture<input id="playerPicture" type="file" accept="image/*" /></label>
+        </div>
+        <div class="modal-actions">
+          <button class="primary-button" type="submit">Save Player</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>

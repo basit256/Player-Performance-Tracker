@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600" role="img" aria-label="Sports field">
+  <defs>
+    <linearGradient id="grass" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#1f5fbf"/>
+      <stop offset="0.48" stop-color="#0b4fa8"/>
+      <stop offset="1" stop-color="#082866"/>
+    </linearGradient>
+    <pattern id="stripes" width="180" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(12)">
+      <rect width="90" height="180" fill="rgba(255,255,255,0.06)"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="1600" fill="url(#grass)"/>
+  <rect width="1200" height="1600" fill="url(#stripes)"/>
+  <g fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="16">
+    <rect x="130" y="120" width="940" height="1360"/>
+    <line x1="130" y1="800" x2="1070" y2="800"/>
+    <circle cx="600" cy="800" r="150"/>
+    <rect x="330" y="120" width="540" height="180"/>
+    <rect x="330" y="1300" width="540" height="180"/>
+    <rect x="455" y="120" width="290" height="70"/>
+    <rect x="455" y="1410" width="290" height="70"/>
+  </g>
+  <g fill="rgba(255,255,255,0.26)">
+    <circle cx="600" cy="800" r="14"/>
+    <circle cx="600" cy="244" r="12"/>
+    <circle cx="600" cy="1356" r="12"/>
+  </g>
+</svg>
